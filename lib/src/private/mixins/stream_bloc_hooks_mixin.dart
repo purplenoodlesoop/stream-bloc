@@ -8,7 +8,7 @@ import 'package:stream_bloc/src/public/interfaces/stream_bloc_observer.dart';
 mixin StreamBlocHooksMixin<State extends Object?, Event extends Object?>
     on StreamBlocInternalBase<State, Event>
     implements StreamBlocHooks<State, Event> {
-  final _observer = StreamBlocObserver.current;
+  StreamBlocObserver? get _observer => StreamBlocObserver.current;
 
   @override
   void onEvent(Event event) {
