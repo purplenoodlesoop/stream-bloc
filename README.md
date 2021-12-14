@@ -1,4 +1,6 @@
-# Modern implementation of the Original BLoC
+# stream_bloc
+
+Modern implementation of the Original BLoC
 
 ## About
 
