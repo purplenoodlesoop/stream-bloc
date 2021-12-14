@@ -27,15 +27,15 @@ Future<void> nextEventLoop() => Future.delayed(Duration.zero);
 
 Future<void> main(List<String> arguments) async {
   final CounterBloc bloc = CounterBlocImpl();
+
   final printSubscription = bloc.stream.listen(print);
+
+  bloc
+    ..add(Increment())
+    ..add(Increment())
+    ..add(Increment())
+    ..add(Decrement());
   await nextEventLoop();
-  bloc.add(Increment());
-  await nextEventLoop();
-  bloc.add(Increment());
-  await nextEventLoop();
-  bloc.add(Increment());
-  await nextEventLoop();
-  bloc.add(Decrement());
-  await nextEventLoop();
+
   await printSubscription.cancel();
 }

@@ -59,7 +59,7 @@ abstract class StreamBlocInternalBase<State extends Object?,
     try {
       onEvent(event);
       _eventStreamController.add(event);
-    } catch (error, stackTrace) {
+    } on Object catch (error, stackTrace) {
       onError(error, stackTrace);
       rethrow;
     }
