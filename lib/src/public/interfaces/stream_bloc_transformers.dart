@@ -6,8 +6,8 @@ import 'package:meta/meta.dart';
 typedef TransitionFunction<Event, State> = Stream<Transition<Event, State>>
     Function(Event event);
 
-abstract class StreamBlocTransformers<State extends Object?,
-    Event extends Object?> {
+abstract class StreamBlocTransformers<Event extends Object?,
+    State extends Object?> {
   /// Transforms the `Stream<Transition>` into a new `Stream<Transition>`.
   /// By default [transformTransitions] returns
   /// the incoming `Stream<Transition>`.

@@ -6,12 +6,8 @@ class Increment implements CounterEvent {}
 
 class Decrement implements CounterEvent {}
 
-abstract class CounterBloc extends StreamBlocBase<int, CounterEvent> {
-  CounterBloc(int initialState) : super(initialState);
-}
-
-class CounterBlocImpl extends CounterBloc {
-  CounterBlocImpl() : super(0);
+class CounterBloc extends StreamBloc<CounterEvent, int> {
+  CounterBloc() : super(0);
 
   @override
   Stream<int> mapEventToStates(CounterEvent event) async* {
@@ -26,7 +22,7 @@ class CounterBlocImpl extends CounterBloc {
 Future<void> nextEventLoop() => Future.delayed(Duration.zero);
 
 Future<void> main(List<String> arguments) async {
-  final CounterBloc bloc = CounterBlocImpl();
+  final bloc = CounterBloc();
 
   final printSubscription = bloc.stream.listen(print);
 
