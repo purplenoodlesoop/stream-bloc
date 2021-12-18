@@ -10,13 +10,6 @@ packages:
       url: "https://github.com/felangel/bloc.git"
     source: git
     version: "8.0.1"
-  lints:
-    dependency: "direct dev"
-    description:
-      name: lints
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   meta:
     dependency: "direct main"
     description:

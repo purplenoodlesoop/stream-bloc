@@ -1,14 +1,13 @@
 // ignore_for_file: invalid_use_of_protected_member
 
 import 'package:bloc/bloc.dart';
-import 'package:stream_bloc/src/private/base/stream_bloc_internal_base.dart';
+import 'package:stream_bloc/src/private/base/stream_bloc_base.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc_hooks.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc_observer.dart';
 
-mixin StreamBlocHooksMixin<State extends Object?, Event extends Object?>
-    on StreamBlocInternalBase<State, Event>
-    implements StreamBlocHooks<State, Event> {
-  final _observer = StreamBlocObserver.current;
+mixin StreamBlocHooksMixin<Event extends Object?, State extends Object?>
+    on StreamBlocBase<Event, State> implements StreamBlocHooks<Event, State> {
+  StreamBlocObserver? get _observer => StreamBlocObserver.current;
 
   @override
   void onEvent(Event event) {

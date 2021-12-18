@@ -29,20 +29,20 @@ abstract class StreamBlocObserver {
   /// instance is created.
   @protected
   @mustCallSuper
-  void onCreate(StreamBloc bloc) {}
+  void onCreate(IStreamBloc bloc) {}
 
   /// Called whenever an [event] is `added` to any [bloc] with the given [bloc]
   /// and [event].
   @protected
   @mustCallSuper
-  void onEvent(StreamBloc bloc, Object? event) {}
+  void onEvent(IStreamBloc bloc, Object? event) {}
 
   /// Called whenever a [Change] occurs in any [bloc]
   /// A [change] occurs when a new state is emitted.
   /// [onChange] is called before a bloc's state has been updated.
   @protected
   @mustCallSuper
-  void onChange(StreamBloc bloc, Change change) {}
+  void onChange(IStreamBloc bloc, Change change) {}
 
   /// Called whenever a transition occurs in any [bloc] with the given [bloc]
   /// and [transition].
@@ -51,14 +51,14 @@ abstract class StreamBlocObserver {
   /// [onTransition] is called before a [bloc]'s state has been updated.
   @protected
   @mustCallSuper
-  void onTransition(StreamBloc bloc, Transition transition) {}
+  void onTransition(IStreamBloc bloc, Transition transition) {}
 
   /// Called whenever an [error] is thrown in any [Bloc] or [Cubit].
   /// The [stackTrace] argument may be [StackTrace.empty] if an error
   /// was received without a stack trace.
   @protected
   @mustCallSuper
-  void onError(StreamBloc bloc, Object error, StackTrace stackTrace) {}
+  void onError(IStreamBloc bloc, Object error, StackTrace stackTrace) {}
 
   /// Called whenever a [Bloc] is closed.
   /// [onClose] is called just before the [Bloc] is closed
@@ -66,5 +66,5 @@ abstract class StreamBlocObserver {
   /// emit new states.
   @protected
   @mustCallSuper
-  void onClose(StreamBloc bloc) {}
+  void onClose(IStreamBloc bloc) {}
 }

@@ -6,8 +6,8 @@ import 'package:bloc/bloc.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc.dart';
 import 'package:stream_bloc/stream_bloc.dart';
 
-abstract class StreamBlocInternalBase<State extends Object?,
-    Event extends Object?> implements StreamBloc<State, Event> {
+abstract class StreamBlocBase<Event extends Object?, State extends Object?>
+    implements IStreamBloc<Event, State> {
   late final StreamController<Event> _eventStreamController =
       StreamController();
   late final StreamController<State> _stateStreamController =
@@ -17,7 +17,7 @@ abstract class StreamBlocInternalBase<State extends Object?,
 
   State _state;
 
-  StreamBlocInternalBase(State initialState) : _state = initialState {
+  StreamBlocBase(State initialState) : _state = initialState {
     StreamBlocObserver.current?.onCreate(this);
     _bindEventsToStates();
   }
@@ -59,7 +59,7 @@ abstract class StreamBlocInternalBase<State extends Object?,
     try {
       onEvent(event);
       _eventStreamController.add(event);
-    } catch (error, stackTrace) {
+    } on Object catch (error, stackTrace) {
       onError(error, stackTrace);
       rethrow;
     }
