@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
-  final List<StreamSubscription<Object?>> _subscription = [];
+  final List<StreamSubscription<dynamic>> _subscriptions = [];
 
   @protected
   StreamSubscription<T> listenToStream<T>(
@@ -12,7 +12,7 @@ mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
     void Function(T event) subscriber,
   ) {
     final subscription = stream.listen(subscriber);
-    _subscription.add(subscription);
+    _subscriptions.add(subscription);
     return subscription;
   }
 
@@ -39,10 +39,9 @@ mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
 
   @override
   Future<void> close() async {
-    await Future.forEach<StreamSubscription<Object?>>(
-      _subscription,
-      (subscription) => subscription.cancel(),
-    );
+    for (final subscription in _subscriptions) {
+      await subscription.cancel();
+    }
     return super.close();
   }
 }
