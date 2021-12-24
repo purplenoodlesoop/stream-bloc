@@ -62,9 +62,11 @@ There are three main differences from the Original bloc.
 
 1) `mapEventToState` is renamed to `mapEventToStates`. The method returns an asynchronous sequence of states – not a single state.
 
-2) It is not possible to emit a new state without it being a response to a certain event. `StreamBloc` does not implement `Emittable` and does not have an `emit` method. The original bloc has its method because both `Cubit` and `Bloc` are descendants of the same base class, but `emit` should not be used within a `Bloc`. It is marked as visible for testing, but it is always a good idea to test a whole instead of its parts.
+2) `StreamBloc`'s type parameters/generics are constrained to subclasses of an `Object?`.
 
-3) Bloc can emit identical states consequentially. The output stream of the `StreamBloc` is not distinct because of two main reasons
+3) It is not possible to emit a new state without it being a response to a certain event. `StreamBloc` does not implement `Emittable` and does not have an `emit` method. The original bloc has its method because both `Cubit` and `Bloc` are descendants of the same base class, but `emit` should not be used within a `Bloc`. It is marked as visible for testing, but it is always a good idea to test a whole instead of its parts.
+
+4) Bloc can emit identical states consequentially. The output stream of the `StreamBloc` is not distinct because of two main reasons
     - `flutter_bloc`'s `BlocListener`/`BlocConsumer` may be interested in any new emitted state, even if the state had not changed
     - `stream.map(...)`/`stream.where(...)` (essentially `BlocBuilder` and/or `BlocSelector`) applied to `stream.distinct()` removes the guarantee of uniques event in the stream, making the `distinct` redundant; it should be applied last, not first.
 
