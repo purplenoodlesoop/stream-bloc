@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc.dart';
-import 'package:stream_bloc/stream_bloc.dart';
+import 'package:stream_bloc/src/public/interfaces/stream_bloc_observer.dart';
 
 abstract class StreamBlocBase<Event extends Object?, State extends Object?>
     implements IStreamBloc<Event, State> {
@@ -39,7 +39,8 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
       if (!_stateStreamController.isClosed) {
         final newState = transition.nextState;
         onChange(Change(currentState: state, nextState: newState));
-        _stateStreamController.add(_state = newState);
+        if (newState != _state) _state = newState;
+        _stateStreamController.add(_state);
       }
     } on Object catch (error, stackTrace) {
       onError(error, stackTrace);

@@ -32,4 +32,5 @@ Future<void> main(List<String> arguments) async {
   await Future<void>.delayed(Duration.zero);
 
   await printSubscription.cancel();
+  await bloc.close();
 }
