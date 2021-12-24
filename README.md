@@ -58,7 +58,7 @@ class StreamCounterBloc extends StreamBloc<CounterEvent, int> { // StreamBloc â€
 
 ## Modifications
 
-There are three main differences from the Original bloc.
+There are four main differences from the Original bloc.
 
 1) `mapEventToState` is renamed to `mapEventToStates`. The method returns an asynchronous sequence of states â€“ not a single state.
 
