@@ -4,12 +4,10 @@ packages:
   bloc:
     dependency: "direct main"
     description:
-      path: "packages/bloc"
-      ref: HEAD
-      resolved-ref: "77bb1ce2e4646efc0cc99b9c988e8ded155c035d"
-      url: "https://github.com/felangel/bloc.git"
-    source: git
-    version: "8.0.1"
+      name: bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.0.2"
   meta:
     dependency: "direct main"
     description:
