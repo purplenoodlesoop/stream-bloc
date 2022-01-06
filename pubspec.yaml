@@ -1,5 +1,3 @@
-publish_to: none
-
 name: stream_bloc
 description: Modern implementation of the Original BLoC 
 version: 0.1.0
