@@ -9,7 +9,7 @@ import 'package:stream_bloc/src/public/interfaces/stream_bloc_observer.dart';
 abstract class StreamBlocBase<Event extends Object?, State extends Object?>
     implements IStreamBloc<Event, State> {
   late final StreamController<Event> _eventStreamController =
-      StreamController();
+      StreamController.broadcast();
   late final StreamController<State> _stateStreamController =
       StreamController.broadcast();
 
