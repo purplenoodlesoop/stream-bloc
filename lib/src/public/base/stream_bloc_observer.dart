@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 abstract class StreamBlocObserver {
-  static const _tag = #stream_bloc_observer_tag;
+  static const Object _tag = Object();
 
   static R inject<R>(
     StreamBlocObserver observer,
