@@ -16,6 +16,7 @@ abstract class StreamBlocObserver {
 
   static StreamBlocObserver? get current {
     Zone? currentZone = Zone.current;
+
     while (currentZone != null) {
       final Object? value = currentZone[_tag];
       if (value is StreamBlocObserver) return value;

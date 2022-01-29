@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc.dart';
-import 'package:stream_bloc/src/public/interfaces/stream_bloc_observer.dart';
+import 'package:stream_bloc/src/public/base/stream_bloc_observer.dart';
 
 abstract class StreamBlocBase<Event extends Object?, State extends Object?>
     implements IStreamBloc<Event, State> {
