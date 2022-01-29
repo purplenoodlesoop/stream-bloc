@@ -2,8 +2,8 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:stream_bloc/src/private/base/stream_bloc_base.dart';
-import 'package:stream_bloc/src/public/interfaces/stream_bloc_hooks.dart';
 import 'package:stream_bloc/src/public/base/stream_bloc_observer.dart';
+import 'package:stream_bloc/src/public/interfaces/stream_bloc_hooks.dart';
 
 mixin StreamBlocHooksMixin<Event extends Object?, State extends Object?>
     on StreamBlocBase<Event, State> implements StreamBlocHooks<Event, State> {
