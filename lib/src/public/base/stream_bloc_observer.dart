@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'package:stream_bloc/src/public/interfaces/stream_bloc.dart';
-
 abstract class StreamBlocObserver {
   static const _tag = #stream_bloc_observer_tag;
 
@@ -30,20 +28,20 @@ abstract class StreamBlocObserver {
   /// instance is created.
   @protected
   @mustCallSuper
-  void onCreate(IStreamBloc bloc) {}
+  void onCreate(Closable closable) {}
 
   /// Called whenever an [event] is `added` to any [bloc] with the given [bloc]
   /// and [event].
   @protected
   @mustCallSuper
-  void onEvent(IStreamBloc bloc, Object? event) {}
+  void onEvent(BlocEventSink eventSink, Object? event) {}
 
   /// Called whenever a [Change] occurs in any [bloc]
   /// A [change] occurs when a new state is emitted.
   /// [onChange] is called before a bloc's state has been updated.
   @protected
   @mustCallSuper
-  void onChange(IStreamBloc bloc, Change change) {}
+  void onChange(StateStreamable stateStreamable, Change change) {}
 
   /// Called whenever a transition occurs in any [bloc] with the given [bloc]
   /// and [transition].
@@ -52,14 +50,14 @@ abstract class StreamBlocObserver {
   /// [onTransition] is called before a [bloc]'s state has been updated.
   @protected
   @mustCallSuper
-  void onTransition(IStreamBloc bloc, Transition transition) {}
+  void onTransition(BlocEventSink bloc, Transition transition) {}
 
   /// Called whenever an [error] is thrown in any [Bloc] or [Cubit].
   /// The [stackTrace] argument may be [StackTrace.empty] if an error
   /// was received without a stack trace.
   @protected
   @mustCallSuper
-  void onError(IStreamBloc bloc, Object error, StackTrace stackTrace) {}
+  void onError(ErrorSink errorSink, Object error, StackTrace stackTrace) {}
 
   /// Called whenever a [Bloc] is closed.
   /// [onClose] is called just before the [Bloc] is closed
@@ -67,5 +65,5 @@ abstract class StreamBlocObserver {
   /// emit new states.
   @protected
   @mustCallSuper
-  void onClose(IStreamBloc bloc) {}
+  void onClose(Closable closable) {}
 }
