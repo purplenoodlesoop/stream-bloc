@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+/// An interface that exposes a list of lifecycle-related methods.
 abstract class StreamBlocHooks<Event extends Object?, State extends Object?> {
   /// Called whenever an [event] is [add]ed to the [Bloc].
   /// A great spot to add logging/analytics at the individual [Bloc] level.

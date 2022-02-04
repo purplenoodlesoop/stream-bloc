@@ -3,13 +3,19 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:stream_bloc/src/public/interfaces/stream_bloc.dart';
-import 'package:stream_bloc/src/public/interfaces/stream_bloc_observer.dart';
+import 'package:stream_bloc/src/public/base/stream_bloc_observer.dart';
+import 'package:stream_bloc/src/public/interfaces/stream_bloc_mapper.dart';
+import 'package:stream_bloc/stream_bloc.dart';
 
 abstract class StreamBlocBase<Event extends Object?, State extends Object?>
-    implements IStreamBloc<Event, State> {
+    implements
+        BlocEventSink<Event>,
+        StateStreamableSource<State>,
+        StreamBlocMapper<Event, State>,
+        StreamBlocTransformers<Event, State>,
+        StreamBlocHooks<Event, State> {
   late final StreamController<Event> _eventStreamController =
-      StreamController();
+      StreamController.broadcast();
   late final StreamController<State> _stateStreamController =
       StreamController.broadcast();
 
@@ -26,8 +32,8 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
         _eventStreamController.stream,
         (event) => mapEventToStates(event).map(
           (nextState) => Transition(
-            currentState: state,
             event: event,
+            currentState: state,
             nextState: nextState,
           ),
         ),
