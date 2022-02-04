@@ -1,3 +1,7 @@
+## 0.2.1 - [04.02.2022]
+
+- Fixed imports
+
 ## 0.2.0 - [04.02.2022]
 
 - Events stream is made broadcast.
