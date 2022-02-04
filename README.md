@@ -1,5 +1,13 @@
 # stream_bloc
 
+[![Pub](https://img.shields.io/pub/v/stream_bloc.svg)](https://pub.dev/packages/stream_bloc)
+[![GitHub Stars](https://img.shields.io/github/stars/purplenoodlesoop/stream-bloc.svg)](https://github.com/purplenoodlesoop/stream-bloc)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://en.wikipedia.org/wiki/MIT_License)
+[![Linter](https://img.shields.io/badge/style-custom-brightgreen)](https://github.com/purplenoodlesoop/stream-bloc/blob/master/analysis_options.yaml)
+[![Code size](https://img.shields.io/github/languages/code-size/purplenoodlesoop/stream-bloc)](https://github.com/purplenoodlesoop/stream-bloc)
+
+---
+
 Modern implementation of the Original BLoC
 
 ## About
