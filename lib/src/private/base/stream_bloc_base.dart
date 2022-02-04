@@ -32,8 +32,8 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
         _eventStreamController.stream,
         (event) => mapEventToStates(event).map(
           (nextState) => Transition(
-            currentState: state,
             event: event,
+            currentState: state,
             nextState: nextState,
           ),
         ),

@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+/// A convenience mixin that allows to associate subscriptions' lifecycles with
+/// [BlocEventSink]'s lifecycle, thus emulating automated subscription
+/// management.
 mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
   final List<StreamSubscription<dynamic>> _subscriptions = [];
 
@@ -10,6 +13,8 @@ mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
     if (event != null) add(event);
   }
 
+  /// Listens to a `Stream`, automatically closing the subscription on closing
+  /// of the [BlocEventSink].
   @protected
   StreamSubscription<T> listenToStream<T>(
     Stream<T> stream,
@@ -26,6 +31,8 @@ mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
     return subscription;
   }
 
+  /// Listens to a `Streamable`, automatically closing the subscription on
+  /// closing of the [BlocEventSink].
   @protected
   StreamSubscription<T> listenToStreamable<T>(
     Streamable<T> streamable,
@@ -40,6 +47,9 @@ mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
         onDone: onDone,
       );
 
+  /// Reacts to a `Stream` by adding an event to this [BlocEventSink] on certain
+  /// source stream events, automatically closing the subscription on closing of
+  /// the [BlocEventSink].
   @protected
   StreamSubscription<T> reactToStream<T>(
     Stream<T> stream,
@@ -60,6 +70,9 @@ mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
         ),
       );
 
+  /// Reacts to a `Streamable` by adding an event to this [BlocEventSink] on
+  /// certain source streamable events, automatically closing the subscription
+  /// on closing of the [BlocEventSink].
   @protected
   StreamSubscription<T> reactToStreamable<T>(
     Streamable<T> streamable,

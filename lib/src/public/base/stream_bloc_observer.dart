@@ -3,15 +3,24 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+/// Allows observing certain lifecycle stages of corresponding interfaces and
+/// provides a mechanism of injecting itself through [Zone]s.
+///
+/// Combines in itself a [BlocObserver] with interface arguments and a
+/// [BlocOverrides] that allows overriding only an observer.
 abstract class StreamBlocObserver {
   static const Object _tag = Object();
 
+  /// Runs `body` in a fresh [Zone] using the provided `observer`.
+  ///
+  /// Similar to [BlocOverrides.runZoned].
   static R inject<R>(
     StreamBlocObserver observer,
     R Function() body,
   ) =>
       runZoned(body, zoneValues: {_tag: observer});
 
+  /// Returns the current [StreamBlocObserver] instance.
   static StreamBlocObserver? get current {
     Zone? currentZone = Zone.current;
 
