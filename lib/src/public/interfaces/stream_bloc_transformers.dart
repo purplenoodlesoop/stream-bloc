@@ -9,27 +9,28 @@ typedef TransitionFunction<Event, State> = Stream<Transition<Event, State>>
 /// An interface that allows transforming its events and following transitions
 abstract class StreamBlocTransformers<Event extends Object?,
     State extends Object?> {
-  /// Transforms the `Stream<Transition>` into a new `Stream<Transition>`.
-  /// By default [transformTransitions] returns
-  /// the incoming `Stream<Transition>`.
-  /// You can override [transformTransitions] for advanced usage in order to
-  /// manipulate the frequency and specificity at which `transitions`
-  /// (state changes) occur.
+  /// Transforms the `Stream<Event>` into a new `Stream<Event>`.
+  /// By default [transformSourceEvents] returns the incoming `Stream<Event>`.
+  /// You can override [transformSourceEvents] in order to manipulate the
+  /// frequency and specificity at which incoming `events` are delivered.
   ///
-  /// For example, if you want to debounce outgoing state changes:
+  /// The incoming events can be transformed in the [transformEvents], but
+  /// [transformSourceEvents] is a more appropriate place to do so.
+  ///
+  /// For example, if you want to throttle incoming events:
   ///
   /// ```dart
   /// @override
-  /// Stream<Transition<Event, State>> transformTransitions(
-  ///   Stream<Transition<Event, State>> transitions,
+  /// Stream<Events> transformSourceEvents(
+  ///   Stream<Event> events,
   /// ) {
-  ///   return transitions.debounceTime(Duration(seconds: 1));
+  ///   return events.throttle(Duration(seconds: 1));
   /// }
   /// ```
   @protected
   @visibleForOverriding
-  Stream<Transition<Event, State>> transformTransitions(
-    Stream<Transition<Event, State>> transitions,
+  Stream<Event> transformSourceEvents(
+    Stream<Event> events,
   );
 
   /// Transforms the [events] stream along with a [transitionFn] function into
@@ -51,22 +52,33 @@ abstract class StreamBlocTransformers<Event extends Object?,
   ///   return events.switchMap(transitionFn);
   /// }
   /// ```
-  ///
-  /// Alternatively, if you only want [mapEventToStates] to be called for
-  /// distinct [events]:
-  ///
-  /// ```dart
-  /// @override
-  /// Stream<Transition<Event, State>> transformEvents(events, transitionFn) {
-  ///   return super.transformEvents(
-  ///     events.distinct(),
-  ///     transitionFn,
-  ///   );
-  /// }
-  /// ```
+  @protected
   @visibleForOverriding
   Stream<Transition<Event, State>> transformEvents(
     Stream<Event> events,
     TransitionFunction<Event, State> transitionFn,
+  );
+
+  /// Transforms the `Stream<Transition>` into a new `Stream<Transition>`.
+  /// By default [transformTransitions] returns
+  /// the incoming `Stream<Transition>`.
+  /// You can override [transformTransitions] for advanced usage in order to
+  /// manipulate the frequency and specificity at which `transitions`
+  /// (state changes) occur.
+  ///
+  /// For example, if you want to debounce outgoing state changes:
+  ///
+  /// ```dart
+  /// @override
+  /// Stream<Transition<Event, State>> transformTransitions(
+  ///   Stream<Transition<Event, State>> transitions,
+  /// ) {
+  ///   return transitions.debounceTime(Duration(seconds: 1));
+  /// }
+  /// ```
+  @protected
+  @visibleForOverriding
+  Stream<Transition<Event, State>> transformTransitions(
+    Stream<Transition<Event, State>> transitions,
   );
 }

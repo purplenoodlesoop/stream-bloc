@@ -6,10 +6,7 @@ mixin StreamBlocTransformersMixin<Event extends Object?, State extends Object?>
     on StreamBlocBase<Event, State>
     implements StreamBlocTransformers<Event, State> {
   @override
-  Stream<Transition<Event, State>> transformTransitions(
-    Stream<Transition<Event, State>> transitions,
-  ) =>
-      transitions;
+  Stream<Event> transformSourceEvents(Stream<Event> events) => events;
 
   @override
   Stream<Transition<Event, State>> transformEvents(
@@ -17,4 +14,10 @@ mixin StreamBlocTransformersMixin<Event extends Object?, State extends Object?>
     TransitionFunction<Event, State> transitionFn,
   ) =>
       events.asyncExpand(transitionFn);
+
+  @override
+  Stream<Transition<Event, State>> transformTransitions(
+    Stream<Transition<Event, State>> transitions,
+  ) =>
+      transitions;
 }
