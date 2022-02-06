@@ -29,14 +29,12 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
     _bindEventsToStates();
   }
 
-  Stream<Transition<Event, State>> get _transitions => transformEvents(
-        _eventStreamController.stream,
-        (event) => mapEventToStates(event).map(
-          (nextState) => Transition(
-            event: event,
-            currentState: state,
-            nextState: nextState,
-          ),
+  Stream<Transition<Event, State>> _mapEventToTransitions(Event event) =>
+      mapEventToStates(event).map(
+        (nextState) => Transition(
+          event: event,
+          currentState: state,
+          nextState: nextState,
         ),
       );
 
@@ -55,7 +53,12 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
   }
 
   void _bindEventsToStates() {
-    _transitionSubscription = transformTransitions(_transitions).listen(
+    _transitionSubscription = transformTransitions(
+      transformEvents(
+        transformSourceEvents(_eventStreamController.stream),
+        _mapEventToTransitions,
+      ),
+    ).listen(
       _processTransition,
       onError: onError,
       cancelOnError: false,

@@ -1,6 +1,6 @@
 name: stream_bloc
 description: Modern implementation of the Original BLoC that uses asynchronous generators to describe relationships between events and states.
-version: 0.2.1
+version: 0.3.0
 repository: https://github.com/purplenoodlesoop/stream-bloc
 issue_tracker: https://github.com/purplenoodlesoop/stream-bloc/issues
 homepage: https://github.com/purplenoodlesoop/stream-bloc
