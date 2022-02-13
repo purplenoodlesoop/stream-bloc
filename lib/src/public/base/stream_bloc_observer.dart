@@ -21,15 +21,8 @@ abstract class StreamBlocObserver {
       runZoned(body, zoneValues: {_tag: observer});
 
   /// Returns the current [StreamBlocObserver] instance.
-  static StreamBlocObserver? get current {
-    Zone? currentZone = Zone.current;
-
-    while (currentZone != null) {
-      final Object? value = currentZone[_tag];
-      if (value is StreamBlocObserver) return value;
-      currentZone = currentZone.parent;
-    }
-  }
+  static StreamBlocObserver? get current =>
+      Zone.current[_tag] as StreamBlocObserver?;
 
   /// Called whenever a [Bloc] is instantiated.
   /// In many cases, a cubit may be lazily instantiated and

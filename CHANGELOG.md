@@ -1,3 +1,8 @@
+## 0.3.1 - [13.02.2022]
+
+- Fixed `StreamBlocObserver`'s `StreamBlocObserver.current` getter.
+- Dropped minimum package version constraint to `2.12.0`.
+
 ## 0.3.0 - [06.02.2022]
 
 - Added `transformSourceEvents`.
