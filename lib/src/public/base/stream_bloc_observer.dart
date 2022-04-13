@@ -3,12 +3,32 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+enum StreamBlocObserverPriority {
+  zone,
+  static,
+}
+
+@immutable
+class StreamBlocObserverConfig {
+  final StreamBlocObserver? observer;
+  final StreamBlocObserverPriority observerPriority;
+  final bool shouldFallback;
+
+  const StreamBlocObserverConfig({
+    this.observer,
+    this.observerPriority = StreamBlocObserverPriority.zone,
+    this.shouldFallback = true,
+  });
+}
+
 /// Allows observing certain lifecycle stages of corresponding interfaces and
 /// provides a mechanism of injecting itself through [Zone]s.
 ///
 /// Combines in itself a [BlocObserver] with interface arguments and a
 /// [BlocOverrides] that allows overriding only an observer.
 abstract class StreamBlocObserver {
+  const StreamBlocObserver();
+
   static const Object _tag = Object();
 
   /// Runs `body` in a fresh [Zone] using the provided `observer`.
