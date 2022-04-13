@@ -3,24 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-enum StreamBlocObserverPriority {
-  zone,
-  static,
-}
-
-@immutable
-class StreamBlocObserverConfig {
-  final StreamBlocObserver? observer;
-  final StreamBlocObserverPriority observerPriority;
-  final bool shouldFallback;
-
-  const StreamBlocObserverConfig({
-    this.observer,
-    this.observerPriority = StreamBlocObserverPriority.zone,
-    this.shouldFallback = true,
-  });
-}
-
 /// Allows observing certain lifecycle stages of corresponding interfaces and
 /// provides a mechanism of injecting itself through [Zone]s.
 ///

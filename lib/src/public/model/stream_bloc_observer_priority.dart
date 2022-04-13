@@ -1,0 +1,4 @@
+enum StreamBlocObserverPriority {
+  zone,
+  static,
+}
