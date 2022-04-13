@@ -13,4 +13,5 @@ dependencies:
   meta: ^1.7.0
   bloc: ^8.0.3
 
-
+dev_dependencies:
+  purple_lints: ^0.2.0

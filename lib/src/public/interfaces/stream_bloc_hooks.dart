@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 /// An interface that exposes a list of lifecycle-related methods.
 abstract class StreamBlocHooks<Event extends Object?, State extends Object?> {
-  /// Called whenever an [event] is [add]ed to the [Bloc].
+  /// Called whenever an [event] is `add`ed to the [Bloc].
   /// A great spot to add logging/analytics at the individual [Bloc] level.
   ///
   /// **Note: `super.onEvent` should always be called first.**
@@ -69,7 +69,7 @@ abstract class StreamBlocHooks<Event extends Object?, State extends Object?> {
   /// A [transition] occurs when a new `event` is added
   /// and a new state is `emitted` from a corresponding [EventHandler].
   /// executed.
-  /// [onTransition] is called before a [Bloc]'s [state] has been updated.
+  /// [onTransition] is called before a [Bloc]'s `state` has been updated.
   /// A great spot to add logging/analytics at the individual [Bloc] level.
   ///
   /// **Note: `super.onTransition` should always be called first.**

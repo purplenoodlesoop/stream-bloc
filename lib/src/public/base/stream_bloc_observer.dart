@@ -34,13 +34,13 @@ abstract class StreamBlocObserver {
   @mustCallSuper
   void onCreate(Closable closable) {}
 
-  /// Called whenever an [event] is `added` to any [bloc] with the given [bloc]
-  /// and [event].
+  /// Called whenever an [event] is `added` to any [eventSink] with the given
+  /// [eventSink] and [event].
   @protected
   @mustCallSuper
   void onEvent(BlocEventSink eventSink, Object? event) {}
 
-  /// Called whenever a [Change] occurs in any [bloc]
+  /// Called whenever a [Change] occurs in any [stateStreamable]
   /// A [change] occurs when a new state is emitted.
   /// [onChange] is called before a bloc's state has been updated.
   @protected
