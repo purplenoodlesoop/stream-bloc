@@ -2,16 +2,54 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:stream_bloc/src/public/model/stream_bloc_observer_config.dart';
+import 'package:stream_bloc/src/public/model/stream_bloc_observer_location.dart';
 
+/// {@template stream_bloc_observer.StreamBlocObserver}
 /// Allows observing certain lifecycle stages of corresponding interfaces and
 /// provides a mechanism of injecting itself through [Zone]s.
 ///
 /// Combines in itself a [BlocObserver] with interface arguments and a
 /// [BlocOverrides] that allows overriding only an observer.
+/// {@endtemplate}
 abstract class StreamBlocObserver {
+  /// {@macro stream_bloc_observer.StreamBlocObserver}
   const StreamBlocObserver();
 
   static const Object _tag = Object();
+
+  /// The current [StreamBlocObserverConfig] config that will be used for all
+  /// [StreamBlocObserver]s.
+  static StreamBlocObserverConfig config = const StreamBlocObserverConfig();
+
+  static StreamBlocObserver? get _zoneObserver =>
+      Zone.current[_tag] as StreamBlocObserver?;
+
+  static StreamBlocObserver? get _staticObserver => config.observer;
+
+  /// Returns the current [StreamBlocObserver] instance.
+  static StreamBlocObserver? get current {
+    final location = config.prioritizedLocation;
+    final observer = _observerFor(location);
+
+    return config.shouldFallback
+        ? (observer ?? _observerFor(location.opposite))
+        : observer;
+  }
+
+  /// Sets the current [StreamBlocObserver] at the
+  /// [StreamBlocObserverLocation.static] by updating the [config].
+  static set current(StreamBlocObserver? observer) {
+    config = config.copyWith(observer: observer);
+  }
+
+  static StreamBlocObserver? _observerFor(
+    StreamBlocObserverLocation location,
+  ) =>
+      location.when(
+        zone: () => _zoneObserver,
+        static: () => _staticObserver,
+      );
 
   /// Runs `body` in a fresh [Zone] using the provided `observer`.
   ///
@@ -21,10 +59,6 @@ abstract class StreamBlocObserver {
     R Function() body,
   ) =>
       runZoned(body, zoneValues: {_tag: observer});
-
-  /// Returns the current [StreamBlocObserver] instance.
-  static StreamBlocObserver? get current =>
-      Zone.current[_tag] as StreamBlocObserver?;
 
   /// Called whenever a [Bloc] is instantiated.
   /// In many cases, a cubit may be lazily instantiated and
