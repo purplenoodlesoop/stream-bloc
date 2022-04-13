@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:stream_bloc/src/public/interfaces/stream_bloc_mapper.dart';
 
 /// Signature for a mapper function which takes an [Event] as input
 /// and outputs a [Stream] of [Transition] objects.
@@ -35,16 +36,19 @@ abstract class StreamBlocTransformers<Event extends Object?,
 
   /// Transforms the [events] stream along with a [transitionFn] function into
   /// a `Stream<Transition>`.
-  /// Events that should be processed by [mapEventToStates] need to be passed to
+  /// Events that should be processed by [StreamBlocMapper.mapEventToStates]
+  /// need to be passed to
   /// [transitionFn].
   /// By default `asyncExpand` is used to ensure all [events] are processed in
   /// the order in which they are received.
   /// You can override [transformEvents] for advanced usage in order to
-  /// manipulate the frequency and specificity with which [mapEventToStates] is
-  /// called as well as which [events] are processed.
+  /// manipulate the frequency and specificity with which
+  /// [StreamBlocMapper.mapEventToStates] is called as well as which [events]
+  /// are processed.
   ///
-  /// For example, if you only want [mapEventToStates] to be called on the most
-  /// recent [Event] you can use `switchMap` instead of `asyncExpand`.
+  /// For example, if you only want [StreamBlocMapper.mapEventToStates] to be
+  /// called on the most recent [Event] you can use `switchMap` instead of
+  /// `asyncExpand`.
   ///
   /// ```dart
   /// @override

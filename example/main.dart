@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:stream_bloc/stream_bloc.dart';
 
 abstract class CounterEvent {}

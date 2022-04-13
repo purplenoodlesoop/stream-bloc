@@ -1,3 +1,22 @@
+## 0.4.0 - [13.04.2022]
+
+### Added
+
+- Add `purple_lints` as a package linter.
+- Add `StreamBlocObserverConfig`, `StreamBlocObserverLocation` and static `StreamBlocObserver.config` variable, thus adding the static variable option for global injection of the `StreamBlocObserver`.
+- Add Setter for the `StreamBlocObserver.current` variable.
+- Add `const` constructor to the `StreamBlocObserver`.
+
+### Changed
+
+- Bump `bloc` dependency.
+
+### Fixed
+
+- Fix annotations for implemented and inherited methods.
+- Fix documentation member references.
+- Import `StreamBlocMapper`.
+
 ## 0.3.1 - [13.02.2022]
 
 - Fixed `StreamBlocObserver`'s `StreamBlocObserver.current` getter.

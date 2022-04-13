@@ -1,13 +1,18 @@
 import 'package:bloc/bloc.dart';
+import 'package:meta/meta.dart';
 import 'package:stream_bloc/src/private/base/stream_bloc_base.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc_transformers.dart';
 
 mixin StreamBlocTransformersMixin<Event extends Object?, State extends Object?>
     on StreamBlocBase<Event, State>
     implements StreamBlocTransformers<Event, State> {
+  @protected
+  @visibleForOverriding
   @override
   Stream<Event> transformSourceEvents(Stream<Event> events) => events;
 
+  @protected
+  @visibleForOverriding
   @override
   Stream<Transition<Event, State>> transformEvents(
     Stream<Event> events,
@@ -15,6 +20,8 @@ mixin StreamBlocTransformersMixin<Event extends Object?, State extends Object?>
   ) =>
       events.asyncExpand(transitionFn);
 
+  @protected
+  @visibleForOverriding
   @override
   Stream<Transition<Event, State>> transformTransitions(
     Stream<Transition<Event, State>> transitions,
