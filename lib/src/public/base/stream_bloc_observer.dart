@@ -16,7 +16,7 @@ abstract class StreamBlocObserver {
   /// {@macro stream_bloc_observer.StreamBlocObserver}
   const StreamBlocObserver();
 
-  static const Object _tag = Object();
+  static final Object _tag = Object();
 
   /// The current [StreamBlocObserverConfig] config that will be used for all
   /// [StreamBlocObserver]s.
