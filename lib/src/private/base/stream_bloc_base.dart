@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:meta/meta.dart';
 import 'package:stream_bloc/src/public/base/stream_bloc_observer.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc_hooks.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc_mapper.dart';
@@ -14,7 +15,8 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
         StateStreamableSource<State>,
         StreamBlocMapper<Event, State>,
         StreamBlocTransformers<Event, State>,
-        StreamBlocHooks<Event, State> {
+        StreamBlocHooks<Event, State>,
+        Emittable<State> {
   late final StreamController<Event> _eventStreamController =
       StreamController.broadcast();
   late final StreamController<State> _stateStreamController =
@@ -97,4 +99,21 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
 
   @override
   Stream<State> get stream => _stateStreamController.stream;
+
+  @protected
+  @visibleForTesting
+  @override
+  void emit(State state) {
+    try {
+      if (isClosed) {
+        throw StateError('Cannot emit new states after calling close');
+      }
+      onChange(Change<State>(currentState: _state, nextState: state));
+      _state = state;
+      _stateStreamController.add(_state);
+    } on Object catch (error, stackTrace) {
+      onError(error, stackTrace);
+      rethrow;
+    }
+  }
 }
