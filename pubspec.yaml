@@ -14,4 +14,5 @@ dependencies:
   bloc: ^8.0.3
 
 dev_dependencies:
+  test: ^1.21.1
   purple_lints: ^0.2.0
