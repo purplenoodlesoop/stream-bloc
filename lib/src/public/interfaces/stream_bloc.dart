@@ -1,5 +1,6 @@
 import 'package:stream_bloc/src/public/interfaces/stream_bloc_hooks.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc_mapper.dart';
+import 'package:stream_bloc/src/public/interfaces/stream_bloc_states.dart';
 import 'package:stream_bloc/src/public/interfaces/stream_bloc_transformers.dart';
 
 /// An interface that combines [StreamBlocMapper], [StreamBlocTransformers] and
@@ -8,4 +9,5 @@ abstract class IStreamBloc<Event extends Object?, State extends Object?>
     implements
         StreamBlocMapper<Event, State>,
         StreamBlocTransformers<Event, State>,
-        StreamBlocHooks<Event, State> {}
+        StreamBlocHooks<Event, State>,
+        StreamBlocStates<Event, State> {}
