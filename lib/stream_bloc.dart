@@ -1,6 +1,7 @@
 library stream_bloc;
 
-export 'package:bloc/bloc.dart';
+export 'package:bloc/bloc.dart'
+    hide BlocObserver, BlocOverrides, Cubit, Emitter, EventHandler;
 
 export 'src/public/base/stream_bloc.dart';
 export 'src/public/base/stream_bloc_observer.dart';
