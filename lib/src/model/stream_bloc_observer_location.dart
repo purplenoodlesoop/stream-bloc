@@ -1,4 +1,4 @@
-import 'package:stream_bloc/src/public/base/stream_bloc_observer.dart';
+import 'package:stream_bloc/src/base/stream_bloc_observer.dart';
 
 /// A sum-type that represents possible locations for injected
 /// [StreamBlocObserver]s.

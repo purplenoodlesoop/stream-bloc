@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
-import 'package:stream_bloc/src/public/base/stream_bloc_observer.dart';
-import 'package:stream_bloc/src/public/model/stream_bloc_observer_location.dart';
+import 'package:stream_bloc/src/base/stream_bloc_observer.dart';
+import 'package:stream_bloc/src/model/stream_bloc_observer_location.dart';
 
 /// {@template stream_bloc_observer_config.StreamBlocObserverConfig}
 /// Class that represents a global, immutable configuration for

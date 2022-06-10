@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:stream_bloc/src/public/interfaces/stream_bloc.dart';
+import 'package:stream_bloc/src/interface/stream_bloc.dart';
 
 /// An interface that implement [BlocEventSink] and [StateStreamableSource],
 /// adding a [mapEventToStates] method, a method that describes an asynchronous
