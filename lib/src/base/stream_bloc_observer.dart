@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:stream_bloc/src/public/model/stream_bloc_observer_config.dart';
-import 'package:stream_bloc/src/public/model/stream_bloc_observer_location.dart';
+import 'package:stream_bloc/src/model/stream_bloc_observer_config.dart';
+import 'package:stream_bloc/src/model/stream_bloc_observer_location.dart';
 
 /// {@template stream_bloc_observer.StreamBlocObserver}
 /// Allows observing certain lifecycle stages of corresponding interfaces and

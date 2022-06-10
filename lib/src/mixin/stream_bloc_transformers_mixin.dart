@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:stream_bloc/src/private/base/stream_bloc_base.dart';
-import 'package:stream_bloc/src/public/interfaces/stream_bloc_transformers.dart';
+import 'package:stream_bloc/src/base/stream_bloc_base.dart';
+import 'package:stream_bloc/src/interface/stream_bloc_transformers.dart';
 
 mixin StreamBlocTransformersMixin<Event extends Object?, State extends Object?>
     on StreamBlocBase<Event, State>

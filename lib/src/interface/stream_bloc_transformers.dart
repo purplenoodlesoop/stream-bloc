@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:stream_bloc/src/public/interfaces/stream_bloc_mapper.dart';
+import 'package:stream_bloc/src/interface/stream_bloc_mapper.dart';
 
 /// Signature for a mapper function which takes an [Event] as input
 /// and outputs a [Stream] of [Transition] objects.
