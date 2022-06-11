@@ -17,19 +17,28 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
         StreamBlocTransformers<Event, State>,
         StreamBlocHooks<Event, State>,
         Emittable<State> {
-  late final StreamController<Event> _eventStreamController =
-      StreamController.broadcast();
-  late final StreamController<State> _stateStreamController =
-      StreamController.broadcast();
-
-  StreamSubscription<Transition<Event, State>>? _transitionSubscription;
-
   State _state;
 
   StreamBlocBase(State initialState) : _state = initialState {
     StreamBlocObserver.current?.onCreate(this);
     _bindEventsToStates();
   }
+
+  StreamSubscription<Transition<Event, State>>? _transitionSubscription;
+
+  late final StreamController<Event> _eventStreamController =
+      StreamController.broadcast();
+  late final StreamController<State> _stateStreamController =
+      StreamController.broadcast();
+
+  @override
+  bool get isClosed => _stateStreamController.isClosed;
+
+  @override
+  State get state => _state;
+
+  @override
+  Stream<State> get stream => _stateStreamController.stream;
 
   Stream<Transition<Event, State>> _mapEventToTransitions(Event event) =>
       mapEventToStates(event).map(
@@ -43,7 +52,7 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
   void _processTransition(Transition<Event, State> transition) {
     try {
       onTransition(transition);
-      if (!_stateStreamController.isClosed) emit(transition.nextState);
+      if (!isClosed) emit(transition.nextState);
     } on Object catch (error, stackTrace) {
       onError(error, stackTrace);
     }
@@ -102,13 +111,4 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
     StreamBlocObserver.current?.onClose(this);
     await _stateStreamController.close();
   }
-
-  @override
-  bool get isClosed => _stateStreamController.isClosed;
-
-  @override
-  State get state => _state;
-
-  @override
-  Stream<State> get stream => _stateStreamController.stream;
 }
