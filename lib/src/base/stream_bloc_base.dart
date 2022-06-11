@@ -57,8 +57,10 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
 
   void _processTransition(Transition<Event, State> transition) {
     try {
-      onTransition(transition);
-      if (!isClosed) _emitUnchecked(transition.nextState);
+      if (!isClosed) {
+        onTransition(transition);
+        _emitUnchecked(transition.nextState);
+      }
     } on Object catch (error, stackTrace) {
       onError(error, stackTrace);
     }
