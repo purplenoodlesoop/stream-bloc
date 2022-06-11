@@ -3,6 +3,14 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+const String _emptyLine = '\n\n';
+
+const String _streamableDeprecationMessage = '$_emptyLine'
+    'Direct Streamable-to-Streamable communications are discouraged '
+    'and should be avoided.'
+    '$_emptyLine'
+    'Try moving it either to Repository or Widget layer.';
+
 /// A convenience mixin that allows to associate subscriptions' lifecycles with
 /// [BlocEventSink]'s lifecycle, thus emulating automated subscription
 /// management.
@@ -34,6 +42,7 @@ mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
   /// Listens to a `Streamable`, automatically closing the subscription on
   /// closing of the [BlocEventSink].
   @protected
+  @Deprecated(_streamableDeprecationMessage)
   StreamSubscription<T> listenToStreamable<T>(
     Streamable<T> streamable,
     void Function(T event) onData, {
@@ -74,6 +83,7 @@ mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
   /// certain source streamable events, automatically closing the subscription
   /// on closing of the [BlocEventSink].
   @protected
+  @Deprecated(_streamableDeprecationMessage)
   StreamSubscription<T> reactToStreamable<T>(
     Streamable<T> streamable,
     Event Function(T event) onData, {
