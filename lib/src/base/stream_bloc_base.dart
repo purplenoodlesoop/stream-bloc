@@ -62,6 +62,23 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
     );
   }
 
+  @protected
+  @visibleForTesting
+  @override
+  void emit(State state) {
+    try {
+      if (isClosed) {
+        throw StateError('Cannot emit new states after calling close');
+      }
+      onChange(Change(currentState: _state, nextState: state));
+      if (state != _state) _state = state;
+      _stateStreamController.add(_state);
+    } on Object catch (error, stackTrace) {
+      onError(error, stackTrace);
+      rethrow;
+    }
+  }
+
   @override
   void add(Event event) {
     try {
@@ -94,21 +111,4 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
 
   @override
   Stream<State> get stream => _stateStreamController.stream;
-
-  @protected
-  @visibleForTesting
-  @override
-  void emit(State state) {
-    try {
-      if (isClosed) {
-        throw StateError('Cannot emit new states after calling close');
-      }
-      onChange(Change(currentState: _state, nextState: state));
-      if (state != _state) _state = state;
-      _stateStreamController.add(_state);
-    } on Object catch (error, stackTrace) {
-      onError(error, stackTrace);
-      rethrow;
-    }
-  }
 }
