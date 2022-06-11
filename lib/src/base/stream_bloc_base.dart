@@ -49,10 +49,16 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
         ),
       );
 
+  void _emitUnchecked(State state) {
+    onChange(Change(currentState: _state, nextState: state));
+    if (state != _state) _state = state;
+    _stateStreamController.add(_state);
+  }
+
   void _processTransition(Transition<Event, State> transition) {
     try {
       onTransition(transition);
-      if (!isClosed) emit(transition.nextState);
+      if (!isClosed) _emitUnchecked(transition.nextState);
     } on Object catch (error, stackTrace) {
       onError(error, stackTrace);
     }
@@ -79,9 +85,7 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
       if (isClosed) {
         throw StateError('Cannot emit new states after calling close');
       }
-      onChange(Change(currentState: _state, nextState: state));
-      if (state != _state) _state = state;
-      _stateStreamController.add(_state);
+      _emitUnchecked(state);
     } on Object catch (error, stackTrace) {
       onError(error, stackTrace);
       rethrow;
