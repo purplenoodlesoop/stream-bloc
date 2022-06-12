@@ -1,3 +1,20 @@
+## [0.5.0] – 2022-06-13
+### Added
+- `StreamBloc` now implements `Emittable` and has an `emit` method thanks to [Phat0M (#12)](https://github.com/purplenoodlesoop/stream-bloc/pull/12)
+
+### Changed
+- Refactored package structure for easier navigation and adherence to idiomatic project organization.
+- Refactored `StreamBlocBase` – improved code style and enforced DRY principle.
+
+### Deprecated
+- `listenToStreamable` and `reactToStreamable` methods of `BlocLifecycleMixin` as [Streamable-to-Streamable communications are discouraged](https://bloclibrary.dev/#/architecture?id=bloc-to-bloc-communication).
+
+### Removed
+- Exports of `BlocObserver`, `BlocOverrides`, `Cubit`, `Emitter`, `EventHandler` from `bloc` package.
+
+### Fixed
+- `StreamBlocObserver`'s `Zone` key is made not `const` to avoid collisions thanks to [nxtSwitch (#11)](https://github.com/purplenoodlesoop/stream-bloc/pull/11)
+
 ## 0.4.0 - [13.04.2022]
 
 ### Added
