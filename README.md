@@ -22,11 +22,11 @@ After the 7.2.0 version update, the bloc has changed. Generators and the signatu
 2) Power of generators. They allow to asynchronously return multiple values, including other streams. The new version emulates their behavior using higher-order functions.
 3) New `on` approach makes `freezed` basically useless. It is possible to register just a single handler, but it negates the whole point of the `on` handlers.
 
-This package brings back Original bloc with all the benefits, whilst maintaining 100% compatibility with `bloc` and `flutter_bloc` packages. The `StreamBloc`s can be used with all `flutter_bloc` widgets; they implement the same interfaces.
+This package brings back the Original bloc with all the benefits, whilst maintaining 100% compatibility with `bloc` and `flutter_bloc` packages. The `StreamBloc`s can be used with all `flutter_bloc` widgets; they implement the same interfaces.
 
 ## Overview
 
-If you are familiar with the bloc before the 8.0.0/7.2.0 you are familiar with `StreamBloc` – the central class of this package. Documentation for previous bloc's versions can be used for this packages besides a few modifications that are listed in the next section.
+If you are familiar with the bloc before the 8.0.0/7.2.0 you are familiar with `StreamBloc` – the central class of this package. Documentation for previous bloc's versions can be used for this package besides a few modifications that are listed in the next section.
 
 `StreamBloc` uses a central event-processing method called `mapEventToStates` to convert a single Event to a Stream of States that are emitted asynchronously. Official `Bloc` can be directly translated to `StreamBloc` as described below.
 
@@ -66,46 +66,50 @@ class StreamCounterBloc extends StreamBloc<CounterEvent, int> { // StreamBloc �
 
 ## Modifications
 
-There are four main differences from the Original bloc.
+There are five main differences from the Original bloc.
 
 1) `mapEventToState` is renamed to `mapEventToStates`. The method returns an asynchronous sequence of states – not a single state.
 
 2) `StreamBloc`'s type parameters/generics are constrained to subclasses of an `Object?`.
 
-3) It is not possible to emit a new state without it being a response to a certain event. `StreamBloc` does not implement `Emittable` and does not have an `emit` method. The original bloc has its method because both `Cubit` and `Bloc` are descendants of the same base class, but `emit` should not be used within a `Bloc`. It is marked as visible for testing, but it is always a good idea to test a whole instead of its parts.
-
-4) Bloc can emit identical states consequentially. The output stream of the `StreamBloc` is not distinct because of two main reasons
+3) Bloc can emit identical states consequentially. The output stream of the `StreamBloc` is not distinct because of two main reasons
     - `flutter_bloc`'s `BlocListener`/`BlocConsumer` may be interested in any new emitted state, even if the state had not changed
     - `stream.map(...)`/`stream.where(...)` (essentially `BlocBuilder` and/or `BlocSelector`) applied to `stream.distinct()` removes the guarantee of uniques event in the stream, making the `distinct` redundant; it should be applied last, not first.
 
+4) Bloc Observer can be injected both through zone injection and static variable with the specified priority.
+
+5) Bloc Transformers is extended with an additional method that transforms source events and is applied before the events-transitions transformer.
+
 ## Extras
 
-The package also offers a single convenience mixin `BlocLifecycleMixin` which makes Bloc-to-Bloc communications easier. It offers four methods: `listenToStream`, `listenToStreamable`, `reactToStream` and `reactToStreamable`. Below is an example of its usage.
+The package also offers a single convenience mixin `BlocLifecycleMixin` which makes Bloc-to-Bloc communications easier. It offers two methods: `listenToStream` and `listenToStreamable`. Below is an example of its usage.
 
 ```dart
 
-enum EventA { eventA }
+class IncrementEvent {
+  final int amount;
 
-class BlocA extends StreamBloc<EventA, int> {
-  BlocA() : super(0);
-
-  @override
-  Stream<int> mapEventToStates(EventA event) => Stream.value(1);
+  const IncrementEvent(this.amount);
 }
 
-enum EventB { eventB }
+class IncrementBloc extends StreamBloc<IncrementEvent, int>
+    with BlocLifecycleMixin {
+  IncrementBloc() : super(0) {
+    reactToStream<int>(
+      Stream.periodic(const Duration(seconds: 1), (i) => i),
+      (passed) => IncrementEvent(passed),
+    );
 
-class BlocB extends StreamBloc<EventB, int> with BlocLifecycleMixin<EventB> {
-  BlocB(BlocA blocA) : super(0) {
-    /// Will print every new state of this Bloc to the console.
-    listenToStream(stream, print);
-
-    /// Will add [EventB.eventB] to this bloc every time BlocA emits any state.
-    reactToStreamable<int>(blocA, (blocAState) => EventB.eventB);
+    listenToStream<int>(
+      stream,
+      print,
+    );
   }
 
   @override
-  Stream<int> mapEventToStates(EventB event) => Stream.value(1);
+  Stream<int> mapEventToStates(IncrementEvent event) => Stream.value(
+        state + event.amount,
+      );
 }
 
 ```
