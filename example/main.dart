@@ -1,38 +1,59 @@
 // ignore_for_file: avoid_print
 
+import 'package:meta/meta.dart';
 import 'package:stream_bloc/stream_bloc.dart';
 
-abstract class CounterEvent {}
+@immutable
+abstract class CounterEvent {
+  T map<T>({
+    required T Function(Increment event) increment,
+    required T Function(Decrement event) decrement,
+  });
+}
 
-class Increment implements CounterEvent {}
+class Increment extends CounterEvent {
+  @override
+  T map<T>({
+    required T Function(Increment event) increment,
+    required T Function(Decrement event) decrement,
+  }) =>
+      increment(this);
+}
 
-class Decrement implements CounterEvent {}
+class Decrement extends CounterEvent {
+  @override
+  T map<T>({
+    required T Function(Increment event) increment,
+    required T Function(Decrement event) decrement,
+  }) =>
+      decrement(this);
+}
 
 class CounterBloc extends StreamBloc<CounterEvent, int> {
   CounterBloc() : super(0);
 
   @override
-  Stream<int> mapEventToStates(CounterEvent event) async* {
-    if (event is Increment) {
-      yield state + 1;
-    } else if (event is Decrement) {
-      yield state - 1;
-    }
+  Stream<int> mapEventToStates(CounterEvent event) => event.map(
+        increment: _increment,
+        decrement: _decrement,
+      );
+
+  Stream<int> _increment(Increment event) async* {
+    yield state + 1;
+  }
+
+  Stream<int> _decrement(Decrement event) async* {
+    yield state - 1;
   }
 }
 
-Future<void> main(List<String> arguments) async {
+void main([List<String>? arguments]) {
   final bloc = CounterBloc();
-
   final printSubscription = bloc.stream.listen(print);
-
   bloc
     ..add(Increment())
     ..add(Increment())
     ..add(Increment())
     ..add(Decrement());
-  await Future<void>.delayed(Duration.zero);
-
-  await printSubscription.cancel();
-  await bloc.close();
+  Future(printSubscription.cancel).whenComplete(bloc.close);
 }

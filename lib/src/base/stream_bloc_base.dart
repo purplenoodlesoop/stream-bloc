@@ -1,4 +1,4 @@
-// ignore_for_file: invalid_use_of_protected_member,
+// ignore_for_file: invalid_use_of_protected_member
 
 import 'dart:async';
 
@@ -17,17 +17,17 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
         StreamBlocTransformers<Event, State>,
         StreamBlocHooks<Event, State>,
         Emittable<State> {
-  State _state;
-
   StreamBlocBase(State initialState) : _state = initialState {
     StreamBlocObserver.current?.onCreate(this);
     _bindEventsToStates();
   }
 
-  StreamSubscription<Transition<Event, State>>? _transitionSubscription;
+  State _state;
 
-  late final StreamController<Event> _eventStreamController =
-      StreamController.broadcast();
+  late final StreamSubscription<Transition<Event, State>>
+      _transitionSubscription;
+
+  final StreamController<Event> _eventStreamController = StreamController();
   late final StreamController<State> _stateStreamController =
       StreamController.broadcast();
 
@@ -79,9 +79,9 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
     );
   }
 
+  @override
   @protected
   @visibleForTesting
-  @override
   void emit(State state) {
     try {
       if (isClosed) {
@@ -106,6 +106,7 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
   }
 
   @override
+  @protected
   void addError(Object error, [StackTrace? stackTrace]) {
     onError(error, stackTrace ?? StackTrace.current);
   }
@@ -113,7 +114,7 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
   @override
   FutureOr<void> close() async {
     await _eventStreamController.close();
-    await _transitionSubscription?.cancel();
+    await _transitionSubscription.cancel();
     StreamBlocObserver.current?.onClose(this);
     await _stateStreamController.close();
   }
