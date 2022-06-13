@@ -1,3 +1,8 @@
+## [0.5.1] – 2022-06-13
+
+### Changed
+- Package and example refactoring thanks to [PlugFox (#20)](https://github.com/purplenoodlesoop/stream-bloc/pull/20)
+
 ## [0.5.0] – 2022-06-13
 ### Added
 - `StreamBloc` now implements `Emittable` and has an `emit` method thanks to [Phat0M (#12)](https://github.com/purplenoodlesoop/stream-bloc/pull/12)
