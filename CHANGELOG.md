@@ -1,3 +1,15 @@
+## [0.5.2] – 2022-09-19
+
+### Changed
+- Bumped `bloc` and `meta` dependencies.
+- `BlocLifecycleMixin`s internal subscription list now is created lazily.
+
+### Deprecated
+- Deprecated `StreamBlocObserver.inject` and `StreamBlocObserverLocation.zone`, as [`Zone`d overrides introduce unnecessary complexity and can lead to bugs](https://github.com/felangel/bloc/issues/3470)
+
+### Removed
+- Removed previously deprecated `*toStreamable` methods of `BlocLifecycleMixin` as [Streamable-to-Streamable communications are discouraged](https://bloclibrary.dev/#/architecture?id=bloc-to-bloc-communication).
+
 ## [0.5.1] – 2022-06-13
 
 ### Changed
@@ -12,10 +24,10 @@
 - Refactored `StreamBlocBase` – improved code style and enforced DRY principle.
 
 ### Deprecated
-- `listenToStreamable` and `reactToStreamable` methods of `BlocLifecycleMixin` as [Streamable-to-Streamable communications are discouraged](https://bloclibrary.dev/#/architecture?id=bloc-to-bloc-communication).
+- Deprecated `listenToStreamable` and `reactToStreamable` methods of `BlocLifecycleMixin`, as [Streamable-to-Streamable communications are discouraged](https://bloclibrary.dev/#/architecture?id=bloc-to-bloc-communication).
 
 ### Removed
-- Exports of `BlocObserver`, `BlocOverrides`, `Cubit`, `Emitter`, `EventHandler` from `bloc` package.
+- Removed exports of `BlocObserver`, `BlocOverrides`, `Cubit`, `Emitter`, `EventHandler` from `bloc` package.
 
 ### Fixed
 - `StreamBlocObserver`'s `Zone` key is made not `const` to avoid collisions thanks to [nxtSwitch (#11)](https://github.com/purplenoodlesoop/stream-bloc/pull/11)
