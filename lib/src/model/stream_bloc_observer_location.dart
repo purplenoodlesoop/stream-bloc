@@ -1,14 +1,17 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:stream_bloc/src/base/stream_bloc_observer.dart';
 
 /// A sum-type that represents possible locations for injected
 /// [StreamBlocObserver]s.
 ///
-/// - [zone]-located observer is injected through the
+/// - zone-located observer is injected through the
 /// [StreamBlocObserver.inject]
 /// - static-located observer is injected through the
 /// [StreamBlocObserver.current] or [StreamBlocObserver.config].
 enum StreamBlocObserverLocation {
   /// Injected through the [StreamBlocObserver.inject]
+  @Deprecated('Zoned BlocObserver usage is discouraged')
   zone,
 
   /// Injected through the [StreamBlocObserver.current] or

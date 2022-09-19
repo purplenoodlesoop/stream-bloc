@@ -54,6 +54,7 @@ abstract class StreamBlocObserver {
   /// Runs `body` in a fresh [Zone] using the provided `observer`.
   ///
   /// Similar to [BlocOverrides.runZoned].
+  @Deprecated('Zoned BlocObserver usage is discouraged')
   static R inject<R>(
     StreamBlocObserver observer,
     R Function() body,
