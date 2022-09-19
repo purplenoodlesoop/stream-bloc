@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:stream_bloc/src/base/stream_bloc_observer.dart';
 
 /// A sum-type that represents possible locations for injected

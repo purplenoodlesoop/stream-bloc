@@ -31,7 +31,7 @@ class StreamBlocObserverConfig {
   /// {@macro stream_bloc_observer_config.StreamBlocObserverConfig}
   const StreamBlocObserverConfig({
     this.observer,
-    this.prioritizedLocation = StreamBlocObserverLocation.zone,
+    this.prioritizedLocation = StreamBlocObserverLocation.static,
     this.shouldFallback = true,
   });
 
