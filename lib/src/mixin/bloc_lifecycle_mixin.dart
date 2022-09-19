@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 /// [BlocEventSink]'s lifecycle, thus emulating automated subscription
 /// management.
 mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
-  final List<StreamSubscription<dynamic>> _subscriptions = [];
+  late final List<StreamSubscription<dynamic>> _subscriptions = [];
 
   void _maybeAddEvent(Event? event) {
     if (event != null) add(event);
@@ -27,7 +27,9 @@ mixin BlocLifecycleMixin<Event> on BlocEventSink<Event> {
       onError: onError,
       onDone: onDone,
     );
+
     _subscriptions.add(subscription);
+
     return subscription;
   }
 
