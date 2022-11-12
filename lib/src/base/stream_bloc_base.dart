@@ -27,7 +27,8 @@ abstract class StreamBlocBase<Event extends Object?, State extends Object?>
   late final StreamSubscription<Transition<Event, State>>
       _transitionSubscription;
 
-  final StreamController<Event> _eventStreamController = StreamController();
+  final StreamController<Event> _eventStreamController =
+      StreamController.broadcast();
   late final StreamController<State> _stateStreamController =
       StreamController.broadcast();
 
