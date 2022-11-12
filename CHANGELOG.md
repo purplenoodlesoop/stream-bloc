@@ -1,3 +1,9 @@
+## [0.5.3] – 2022-11-12
+
+### Fixed
+- `StreamBloc`'s stream of events is made broadcast again, partially reverting [(#20)](https://github.com/purplenoodlesoop/stream-bloc/pull/20)
+
+
 ## [0.5.2] – 2022-09-19
 
 ### Changed
