@@ -1,3 +1,7 @@
+## [0.6.0] – 2025-05-23
+
+- Bumped `bloc` and `sdk` versions.
+
 ## [0.5.3] – 2022-11-12
 
 ### Fixed

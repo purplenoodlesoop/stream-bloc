@@ -16,7 +16,7 @@ abstract class StreamBlocObserver {
   /// {@macro stream_bloc_observer.StreamBlocObserver}
   const StreamBlocObserver();
 
-  static final Object _tag = Object();
+  static final _tag = Object();
 
   /// The current [StreamBlocObserverConfig] config that will be used for all
   /// [StreamBlocObserver]s.
@@ -80,7 +80,10 @@ abstract class StreamBlocObserver {
   /// [onChange] is called before a bloc's state has been updated.
   @protected
   @mustCallSuper
-  void onChange(StateStreamable stateStreamable, Change change) {}
+  void onChange<State>(
+    StateStreamable<State> stateStreamable,
+    Change<State> change,
+  ) {}
 
   /// Called whenever a transition occurs in any [bloc] with the given [bloc]
   /// and [transition].
@@ -89,7 +92,10 @@ abstract class StreamBlocObserver {
   /// [onTransition] is called before a [bloc]'s state has been updated.
   @protected
   @mustCallSuper
-  void onTransition(BlocEventSink bloc, Transition transition) {}
+  void onTransition<Event, State>(
+    BlocEventSink bloc,
+    Transition<Event, State> transition,
+  ) {}
 
   /// Called whenever an [error] is thrown in any [Bloc] or [Cubit].
   /// The [stackTrace] argument may be [StackTrace.empty] if an error
